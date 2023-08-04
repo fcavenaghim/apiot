@@ -1,0 +1,13 @@
+from machine import Pin
+import dht
+import time
+ 
+d = dht.DHT11(Pin(25))
+
+while True:
+    d.measure()
+    temperatura = d.temperature()
+    print(f"la temperatura actual es de {temperatura} *C")
+    humedad = d.humidity()
+    print(f"la humedad actual es de {humedad} %")
+    time.sleep(20)
