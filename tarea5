@@ -1,0 +1,29 @@
+from machine import Pin
+import time
+import dht
+
+sw = Pin(23, Pin.IN)
+led = Pin(2, Pin.OUT)
+d = dht.DHT11(Pin(25))
+contador = 0
+
+print("Esperando pulsador")
+
+while True:
+    
+    if (contador == 2):
+        d.measure()
+        temp2 = d.temperature()
+        hum2 = d.humidity()
+        temperatura_promedio = (temp1+temp2)/2
+        humedad_promedio = (hum1+hum2)/2
+        print(f"el promedio es {temperatura_promedio}° y {humedad_promedio}%")
+        contador = 0
+        time.sleep(1)
+    if sw.value():
+        d.measure()
+        temp1 = d.temperature()
+        hum1 = d.humidity()
+        print(f"la t° es de {temp1}° y la humedad es de {hum1}%")
+        contador += 1
+        time.sleep(1)
